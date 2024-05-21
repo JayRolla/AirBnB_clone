@@ -1,37 +1,23 @@
 #!/usr/bin/python3
-class ALXStudent:
-    """
-    A simple class representing an ALX student.
-    Attributes:
-        name (str): The name of the student.
-        cohort (int): The cohort number.
-    """
+import uuid
+from datetime import datetime
 
-    def __init__(self, name, cohort):
-        """
-        Initialize an ALXStudent instance with a name and cohort.
-        Args:
-            name (str): The name of the student.
-            cohort (int): The cohort number of the student.
-        """
-        self.name = name
-        self.cohort = cohort
+class BaseModel:
+    """
+    Base model for AirBnB clone project entities.
+    """
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = self.created_at
 
     def __str__(self):
-        """
-        Return a string representation of the ALXStudent.
-        """
-        return f"ALXStudent(name={self.name}, cohort={self.cohort})"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
-    def display_info(self):
-        """
-        Print information about the student.
-        """
-        print(f"Student Name: {self.name}")
-        print(f"Cohort Number: {self.cohort}")
+    def save(self):
+        """Updates the attribute 'updated_at' with the current datetime."""
+        self.updated_at = datetime.now()
 
-# Example usage:
-if __name__ == "__main__":
-    student = ALXStudent("Molapo Kgarose", 5)
-    print(student)
-    student.display_info()
+    def to_dict(self):
+        """Returns a dictionary containing all keys/values of the instance."""
+        return self.__dict__.copy()
